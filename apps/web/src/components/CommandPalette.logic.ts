@@ -785,11 +785,11 @@ export function buildRootGroups(input: {
 export function getCommandPaletteInputPlaceholder(mode: CommandPaletteMode): string {
   switch (mode) {
     case "root":
-      return "Search commands, projects, and threads...";
+      return "コマンド、プロジェクト、スレッドを検索...";
     case "root-browse":
-      return "Enter project path (e.g. ~/projects/my-app)";
+      return "プロジェクトのパスを入力（例: ~/projects/my-app）";
     case "submenu":
-      return "Search...";
+      return "検索...";
     case "submenu-browse":
       return "Enter path (e.g. ~/projects/my-app)";
   }

@@ -435,8 +435,8 @@ export default function DiffPanel({
     selectedCommitSha !== null
       ? (selectedCommitSubject ?? `Commit ${selectedCommitSha.slice(0, 7)}`)
       : selectedGitScope === "unstaged"
-        ? "Uncommitted"
-        : "Changes";
+        ? "未コミット"
+        : "変更";
   const selectedScopeLabel = toolCallSelection
     ? "Tool call"
     : selectedRunId === null

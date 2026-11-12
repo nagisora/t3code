@@ -53,8 +53,8 @@ export function SidebarThreadHeader({
   // Shrinking results can remove the active option; never leave aria-activedescendant pointing at it.
   const activeResultExists = resultsVisible && activeSearchResultIndex < searchResultCount;
   const newThreadLabel = newThreadShortcutLabel
-    ? `New thread (${newThreadShortcutLabel})`
-    : "New thread";
+    ? `新規スレッド (${newThreadShortcutLabel})`
+    : "新規スレッド";
 
   return (
     <div className="flex items-center gap-1">
@@ -106,7 +106,7 @@ export function SidebarThreadHeader({
           </>
         ) : null}
         <SidebarHeaderIconButton
-          label="New thread"
+          label="新規スレッド"
           tooltip={
             showNewThreadInProjectHint ? (
               <span className="flex flex-col gap-0.5">

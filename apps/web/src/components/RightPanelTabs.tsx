@@ -338,7 +338,7 @@ function RightPanelEmptyState(props: {
 
   const actions = [
     {
-      label: "Browser",
+      label: "ブラウザ",
       icon: Globe2,
       shortcut: "B",
       available: props.browserAvailable,
@@ -346,7 +346,7 @@ function RightPanelEmptyState(props: {
       onClick: props.onAddBrowser,
     },
     {
-      label: "Terminal",
+      label: "ターミナル",
       icon: TerminalSquare,
       shortcut: "T",
       available: props.terminalAvailable,
@@ -354,7 +354,7 @@ function RightPanelEmptyState(props: {
       onClick: props.onAddTerminal,
     },
     {
-      label: "Files",
+      label: "ファイル",
       icon: Files,
       shortcut: "F",
       available: props.filesAvailable,
@@ -362,7 +362,7 @@ function RightPanelEmptyState(props: {
       onClick: props.onAddFiles,
     },
     {
-      label: "Diff",
+      label: "差分",
       icon: FileDiff,
       shortcut: "D",
       available: props.diffAvailable,
@@ -370,7 +370,7 @@ function RightPanelEmptyState(props: {
       onClick: props.onAddDiff,
     },
     {
-      label: "Pull request",
+      label: "プルリクエスト",
       icon: PullRequestGlyph.pullRequest,
       shortcut: "P",
       available: props.pullRequestAvailable,
@@ -378,7 +378,7 @@ function RightPanelEmptyState(props: {
       onClick: props.onAddPullRequest,
     },
     {
-      label: "Linked pull requests",
+      label: "関連プルリクエスト",
       icon: PullRequestGlyph.link,
       shortcut: "L",
       available: props.pullRequestsAvailable,
@@ -386,7 +386,7 @@ function RightPanelEmptyState(props: {
       onClick: props.onAddPullRequests,
     },
     {
-      label: "Device",
+      label: "デバイス",
       description: "Watch an iOS Simulator or Android Emulator.",
       icon: Smartphone,
       shortcut: "M",
@@ -397,7 +397,7 @@ function RightPanelEmptyState(props: {
     ...(props.onAddSideChat
       ? [
           {
-            label: "Side chat",
+            label: "サイドチャット",
             description: "Ask a side question while this thread keeps working.",
             icon: MessagesSquare,
             shortcut: "S",
@@ -475,7 +475,7 @@ function RightPanelEmptyState(props: {
       data-workspace-focus-default
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      aria-label="Open a surface"
+      aria-label="パネルを開く"
       data-surface-launcher-keys={availableActions.map((action) => action.shortcut).join("")}
       className={cn(
         "scrollbar-gutter-both flex min-h-0 flex-1 items-center justify-center overflow-y-auto px-6 outline-none",
@@ -483,7 +483,7 @@ function RightPanelEmptyState(props: {
       )}
     >
       <div className="w-full max-w-xs py-6">
-        <h3 className="mb-3 text-center font-medium text-foreground text-sm">Open a surface</h3>
+        <h3 className="mb-3 text-center font-medium text-foreground text-sm">パネルを開く</h3>
         <div className="flex flex-col gap-0.5">
           {actions.map((action) =>
             action.available ? (
@@ -1096,7 +1096,7 @@ export function RightPanelTabs(props: RightPanelTabsProps) {
 
   const addSurfaceActions = [
     {
-      label: "Browser",
+      label: "ブラウザ",
       icon: Globe2,
       shortcut: "B",
       available: props.browserAvailable,
@@ -1104,7 +1104,7 @@ export function RightPanelTabs(props: RightPanelTabsProps) {
       onClick: props.onAddBrowser,
     },
     {
-      label: "Terminal",
+      label: "ターミナル",
       icon: TerminalSquare,
       shortcut: "T",
       available: props.terminalAvailable,
@@ -1112,7 +1112,7 @@ export function RightPanelTabs(props: RightPanelTabsProps) {
       onClick: props.onAddTerminal,
     },
     {
-      label: "Files",
+      label: "ファイル",
       icon: Files,
       shortcut: "F",
       available: props.filesAvailable,
@@ -1120,7 +1120,7 @@ export function RightPanelTabs(props: RightPanelTabsProps) {
       onClick: props.onAddFiles,
     },
     {
-      label: "Diff",
+      label: "差分",
       icon: FileDiff,
       shortcut: "D",
       available: props.diffAvailable,
@@ -1128,7 +1128,7 @@ export function RightPanelTabs(props: RightPanelTabsProps) {
       onClick: props.onAddDiff,
     },
     {
-      label: "Pull request",
+      label: "プルリクエスト",
       icon: PullRequestGlyph.pullRequest,
       shortcut: "P",
       available: props.pullRequestAvailable,
@@ -1136,7 +1136,7 @@ export function RightPanelTabs(props: RightPanelTabsProps) {
       onClick: props.onAddPullRequest,
     },
     {
-      label: "Linked pull requests",
+      label: "関連プルリクエスト",
       icon: PullRequestGlyph.link,
       shortcut: "L",
       available: props.pullRequestsAvailable,
@@ -1144,7 +1144,7 @@ export function RightPanelTabs(props: RightPanelTabsProps) {
       onClick: props.onAddPullRequests,
     },
     {
-      label: "Device",
+      label: "デバイス",
       icon: Smartphone,
       shortcut: "M",
       available: props.deviceAvailable,
@@ -1154,7 +1154,7 @@ export function RightPanelTabs(props: RightPanelTabsProps) {
     ...(props.onAddSideChat
       ? [
           {
-            label: "Side chat",
+            label: "サイドチャット",
             icon: MessagesSquare,
             shortcut: "S",
             available: props.sideChatAvailable === true && !props.sideChatDisabledReason,

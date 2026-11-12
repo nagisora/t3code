@@ -3324,7 +3324,9 @@ export const ChatComposer = memo(function ChatComposer(props: ChatComposerProps)
                   aria-label="Expand composer"
                 >
                   {prompt.trim() ||
-                    (showProviderUnavailable ? "Enable a provider in Settings" : "Ask anything...")}
+                    (showProviderUnavailable
+                      ? "設定でプロバイダーを有効にしてください"
+                      : "何でも聞いてください…")}
                 </button>
                 {collapsedComposerImagePreviews}
                 <button

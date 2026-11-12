@@ -44,22 +44,22 @@ export function buildDraftActionMenuItems(options: {
   return [
     {
       id: "copy",
-      label: "Copy",
+      label: "コピー",
       icon: "copy",
       disabled: !options.hasPath && !options.hasBranch,
       children: [
-        ...(options.hasPath ? [{ id: "copy-path" as const, label: "Path", icon: "folder" }] : []),
+        ...(options.hasPath ? [{ id: "copy-path" as const, label: "パス", icon: "folder" }] : []),
         ...(options.hasBranch
-          ? [{ id: "copy-branch" as const, label: "Branch", icon: "git-branch" }]
+          ? [{ id: "copy-branch" as const, label: "ブランチ", icon: "git-branch" }]
           : []),
       ],
     },
     ...(options.hasProject
-      ? [{ id: "project-settings" as const, label: "Project settings", icon: "settings" }]
+      ? [{ id: "project-settings" as const, label: "プロジェクト設定", icon: "settings" }]
       : []),
     {
       id: "discard",
-      label: "Discard draft",
+      label: "下書きを破棄",
       icon: "trash",
       destructive: true,
       separatorBefore: true,
@@ -118,7 +118,7 @@ export function buildThreadActionMenuItems(
 ): ReadonlyArray<ContextMenuItem<ThreadActionMenuId>> {
   const items: ReadonlyArray<ContextMenuItem<ThreadActionMenuId>> = [
     ...(state.canFind
-      ? [{ id: "find" as const, label: "Find in thread", icon: "text-search" }]
+      ? [{ id: "find" as const, label: "スレッド内を検索", icon: "text-search" }]
       : []),
     ...(state.branch
       ? [
@@ -132,24 +132,24 @@ export function buildThreadActionMenuItems(
     ...(state.supports.pinning
       ? [
           state.isPinned
-            ? { id: "unpin" as const, label: "Unpin thread", icon: "pin-off" }
-            : { id: "pin" as const, label: "Pin thread", icon: "pin" },
+            ? { id: "unpin" as const, label: "ピン留めを外す", icon: "pin-off" }
+            : { id: "pin" as const, label: "ピン留め", icon: "pin" },
         ]
       : []),
     ...(state.supports.settlement
       ? [
           state.isSettled
-            ? { id: "unsettle" as const, label: "Un-settle thread", icon: "circle-check" }
-            : { id: "settle" as const, label: "Settle thread", icon: "circle-check" },
+            ? { id: "unsettle" as const, label: "完了を取り消す", icon: "circle-check" }
+            : { id: "settle" as const, label: "完了にする", icon: "circle-check" },
         ]
       : []),
     ...(state.supports.snooze
       ? [
           state.isSnoozed
-            ? { id: "unsnooze" as const, label: "Wake thread", icon: "clock" }
+            ? { id: "unsnooze" as const, label: "スヌーズを解除", icon: "clock" }
             : {
                 id: "snooze" as const,
-                label: "Snooze",
+                label: "スヌーズ",
                 icon: "clock",
                 disabled: !state.canSnoozeNow,
                 children: [
@@ -160,34 +160,34 @@ export function buildThreadActionMenuItems(
                   })),
                   {
                     id: "snooze:custom" as const,
-                    label: "Custom…",
+                    label: "カスタム…",
                     separatorBefore: state.snoozePresets.length > 0,
                   },
                 ],
               },
         ]
       : []),
-    { id: "rename", label: "Rename thread", icon: "pencil", separatorBefore: true },
+    { id: "rename", label: "名前を変更", icon: "pencil", separatorBefore: true },
     ...(state.supports.titleRegeneration
       ? [
           {
             id: "regenerate-title" as const,
-            label: state.isRegeneratingTitle ? "Regenerating…" : "Regenerate title",
+            label: state.isRegeneratingTitle ? "再生成中…" : "タイトルを再生成",
             icon: "refresh-cw",
             disabled: state.isRegeneratingTitle,
           },
         ]
       : []),
-    { id: "mark-unread", label: "Mark unread", icon: "mail-open" },
+    { id: "mark-unread", label: "未読にする", icon: "mail-open" },
     ...(state.canShareWithGuest
-      ? [{ id: "share-guest" as const, label: "Share with guest", icon: "user-plus" }]
+      ? [{ id: "share-guest" as const, label: "ゲストと共有", icon: "user-plus" }]
       : []),
     ...(state.projectFilter
       ? [
           {
             id: "filter-by-project" as const,
             label: state.projectFilter.isActive
-              ? "Show all projects"
+              ? "すべてのプロジェクトを表示"
               : `Filter by ${state.projectFilter.label}`,
             icon: "folder-tree",
           },
@@ -197,7 +197,7 @@ export function buildThreadActionMenuItems(
       ? [
           {
             id: "turn-into-project" as const,
-            label: "Turn into project",
+            label: "プロジェクトに変換",
             icon: "folder-plus",
             disabled: state.isRunning,
           },
@@ -207,17 +207,17 @@ export function buildThreadActionMenuItems(
       ? [
           {
             id: "auto-settle" as const,
-            label: "Auto-settle behavior",
+            label: "自動完了の動作",
             icon: "timer",
             children: [
               {
                 id: "auto-settle:enabled" as const,
-                label: "Follow settings",
+                label: "設定に従う",
                 checked: state.autoSettleEnabled,
               },
               {
                 id: "auto-settle:disabled" as const,
-                label: "Never",
+                label: "しない",
                 checked: !state.autoSettleEnabled,
               },
             ],
@@ -226,29 +226,29 @@ export function buildThreadActionMenuItems(
       : []),
     {
       id: "copy",
-      label: "Copy",
+      label: "コピー",
       icon: "copy",
       separatorBefore: true,
       children: [
-        { id: "copy-path", label: "Path", icon: "folder" },
+        { id: "copy-path", label: "パス", icon: "folder" },
         ...(state.branch
-          ? [{ id: "copy-branch" as const, label: "Branch", icon: "git-branch" }]
+          ? [{ id: "copy-branch" as const, label: "ブランチ", icon: "git-branch" }]
           : []),
-        { id: "copy-thread", label: "Thread", icon: "message-square" },
-        { id: "copy-thread-id", label: "Thread ID", icon: "hash" },
+        { id: "copy-thread", label: "スレッド", icon: "message-square" },
+        { id: "copy-thread-id", label: "スレッドID", icon: "hash" },
       ],
     },
-    { id: "project-settings", label: "Project settings", icon: "settings" },
+    { id: "project-settings", label: "プロジェクト設定", icon: "settings" },
     {
       id: "archive",
-      label: "Archive thread",
+      label: "スレッドをアーカイブ",
       icon: "archive",
       disabled: state.isRunning,
       separatorBefore: true,
     },
     {
       id: "delete",
-      label: "Delete",
+      label: "削除",
       destructive: true,
       icon: "trash",
     },
