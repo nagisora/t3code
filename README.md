@@ -1,153 +1,108 @@
-# T3 Code
+# T3 Code 日本語化フォーク
 
-T3 Code is an "agent harness control surface". It enables control of the agents on your machine with a best-in-class mobile app ([iOS](https://apps.apple.com/us/app/t3-code-remote-claude-more/id6787819824), [Android](https://play.google.com/store/apps/details?id=com.t3tools.t3code)), [web app](https://app.t3.codes) and [Electron-based desktop app](https://t3.codes).
+[T3 Code](https://github.com/pingdotgg/t3code)（pingdotgg/t3code）の UI を日本語で使えるようにするための、非公式フォークです。
 
-Works with your subscriptions on Claude Code, Codex, Cursor, Grok Build, OpenCode, Google Antigravity, and fx. If they're set up on your computer, T3 Code can control them.
+- **ベース**: 安定版タグ **v0.1.9**
+- **ブランチ**: `local-ja`（このリポジトリのデフォルトブランチ）
+- 本家の README は [README.upstream.md](./README.upstream.md) に原文のまま収録しています。ライセンスは本家に準拠します（MIT）。
 
-## "Wait, what are you selling me?"
+## 本家との差分
 
-Nothing. We built T3 Code because we wanted the best possible development experience with agents. We were inspired by existing solutions like the Codex desktop app, Conductor, Claude Desktop and Cursor Glass, but none met our bar.
+v0.1.9 の上に、性質の異なる2層の変更が積まれています。
 
-We wanted something performant, remote-ready, and truly open. If we ever go the wrong direction, we want you to have everything you need to fork and build the editor that you want.
+### 1. `[official-ja-settings]` — 本家の設定画面 i18n の先行取り込み
 
-## Installation
+本家の言語切り替え機能（PR #31313）と日本語翻訳（PR #33164）は、v0.1.9 のタグ付け後に main へマージされたため、安定版には含まれていません。このフォークでは、その公式 PR を v0.1.9 へバックポートしています。
 
-> [!WARNING]
-> T3 Code currently supports Codex, Claude, Cursor, Grok Build, OpenCode, Antigravity, and fx. Install and authenticate at least one provider before use:
->
-> - Codex: install [Codex CLI](https://developers.openai.com/codex/cli) and run `codex login`
-> - Claude: install [Claude Code](https://claude.com/product/claude-code) and run `claude auth login`
-> - Cursor: install [Cursor CLI](https://cursor.com/cli) and run `agent login`
-> - Grok Build: install [Grok Build CLI](https://x.ai/cli) and run `grok login`
-> - OpenCode: install [OpenCode](https://opencode.ai) and run `opencode auth login`
-> - Antigravity: enable it in Settings, then use **Install Antigravity** and **Sign in with Google**. No CLI is required.
-> - fx: install [fx](https://fx.sh) and run `fx login` on the machine running the T3 Code server ([setup guide](./docs/user/providers-fx.md))
+| コミット                           | 内容                                                                   |
+| ---------------------------------- | ---------------------------------------------------------------------- |
+| `[official-ja-settings]` #31313    | 言語切り替えの土台（`apps/web/src/i18n/`、設定画面の言語ピッカー）     |
+| `[official-ja-settings]` #33164    | 日本語翻訳（`apps/web/src/i18n/translations/ja.json`、設定画面72項目） |
+| `[official-ja-settings]` pnpm-lock | 上記に伴う依存関係のロックファイル解決分                               |
 
-### Command line
+適用にあたっての手当ては最小限で、`ja.json` は公式ファイルと同一のものを使用しています。将来の安定版に公式の言語切り替えと日本語が含まれれば、この層はすべて外す予定です（手順は「アップデート方針」参照）。
 
-```bash
-curl -fsSL https://t3.codes/install.sh | sh
-```
+なお、この翻訳の範囲は設定画面のみです。設定画面で言語を「日本語」に切り替えると、設定画面が日本語になります。
 
-On Windows, in PowerShell:
+### 2. `[local-ja]` — UI 本体の日本語化
+
+UI 本体の文字列は本家ではまだ言語ファイル化されていないため、コンポーネント内の英語文字列を直接日本語に置き換えています。対象は主要画面の表示範囲です（13ファイル・約85箇所）:
+
+- サイドバー／スレッド一覧（「新規スレッド」、ピン留め／アクティブ／作業中の見出し、プロジェクト検索、右クリックメニュー）
+- スレッドのアクションメニュー（ピン留め、名前を変更、アーカイブ、削除、コピー、スヌーズ、完了にする など）
+- チャット入力欄のプレースホルダ
+- 右パネルタブ（ブラウザ／ターミナル／ファイル／差分／プルリクエスト など）
+- 差分画面の見出し（変更／未コミット）
+- コマンドパレット、空状態の文言
+
+全画面の網羅はしていません。英語が残っている箇所は、この層に置換を追加して対応します。
+
+## セットアップ
+
+前提: Git が使えること。Node は `vp` がリポジトリ指定のバージョン（Node 26）を用意するため、別途インストールは不要です。
+
+### 1. vp（Vite Plus）のインストール
+
+Windows（PowerShell）:
 
 ```powershell
-irm https://t3.codes/install.ps1 | iex
-```
-
-Then run `t3` to start the server and open the local web app. `t3 service install` keeps it running in the background, `t3 update` moves to a newer release, and `t3 --help` has the full reference.
-
-To try it once without installing, run `npx t3@latest`. It offers to install the `t3` command for you.
-
-### Desktop app
-
-Install the latest version of the desktop app from [GitHub Releases](https://github.com/pingdotgg/t3code/releases), or from your favorite package registry:
-
-#### Windows (`winget`)
-
-```bash
-winget install T3Tools.T3Code
-```
-
-#### Windows (`scoop`)
-
-```bash
-scoop install extras/t3code
-```
-
-#### macOS (Homebrew)
-
-```bash
-brew install --cask t3-code
-```
-
-#### Debian, Ubuntu (`.deb`)
-
-Download the `.deb` from [GitHub Releases](https://github.com/pingdotgg/t3code/releases), then:
-
-```bash
-sudo apt install ./T3-Code-*.deb
-```
-
-#### Arch Linux (AUR)
-
-Stable:
-
-```bash
-yay -S t3code-bin
-```
-
-Nightly:
-
-```bash
-yay -S t3code-nightly-bin
-```
-
-The AUR packaging is maintained in this repository under [`packaging/aur`](./packaging/aur).
-
-#### Nix (nixpkgs)
-
-```bash
-nix profile add github:NixOS/nixpkgs/nixos-unstable#t3code
-```
-
-The package is maintained in [nixpkgs](https://github.com/NixOS/nixpkgs/tree/nixos-unstable/pkgs/by-name/t3/t3code)
-and includes the desktop app (`t3code-desktop`) and the `t3` command.
-See [Nix installation](./docs/user/install.md#nix-nixpkgs) for NixOS configuration and updates.
-
-## Some notes
-
-We are very very early in this project. Expect bugs.
-
-We are (mostly) not accepting contributions yet. Small fixes may be considered. Big features will not be.
-
-## Documentation
-
-Full docs live in [docs/](./docs). There's no docs site yet.
-
-- [FAQ](./docs/user/faq.md)
-- [Install and first run](./docs/user/install.md)
-- [Permission modes](./docs/user/permission-modes.md)
-- [Keyboard shortcuts](./docs/user/keybindings.md)
-- [Project settings](./docs/user/project-settings.md)
-- [Appearance preferences](./docs/user/appearance.md)
-- [Remote access from a phone or another machine](./docs/user/remote-access.md)
-- [Connect Claude Code, Codex, ChatGPT and other agents over MCP](./docs/user/outside-agents.md)
-- [Keeping app and server in sync](./docs/user/updating.md)
-- [Source control integrations](./docs/user/source-control.md)
-- Multiple accounts: [Codex](./docs/user/providers-codex.md) · [Claude](./docs/user/providers-claude.md)
-- [Run T3 Code as a background service](./docs/user/background-service.md)
-
-Building from source? Start at [docs/internals/overview.md](./docs/internals/overview.md).
-
-## If you REALLY want to contribute still.... read this first
-
-### Install `vp`
-
-T3 Code uses Vite+ so you'll need to install the global `vp` command-line tool.
-
-#### macOS / Linux
-
-```bash
-curl -fsSL https://vite.plus | bash
-```
-
-#### Windows
-
-```bash
 irm https://vite.plus/ps1 | iex
 ```
 
-Checkout their getting started guide for more information: https://viteplus.dev/guide/
+macOS / Linux:
 
-### Install dependencies
+```sh
+curl -fsSL https://vite.plus | bash
+```
 
-```bash
+### 2. clone
+
+```sh
+git clone https://github.com/nagisora/t3code.git
+cd t3code
+```
+
+デフォルトブランチが `local-ja` のため、チェックアウトは不要です。
+
+### 3. 依存関係のインストール
+
+```sh
 vp i
 ```
 
-Read [CONTRIBUTING.md](./CONTRIBUTING.md) before reporting a bug or opening a PR.
+### 4. 起動
 
-Have a feature request? Start an [Ideas discussion](https://github.com/pingdotgg/t3code/discussions/categories/ideas).
+Web 版（サーバー＋Web UI）:
 
-Need support? Join the [Discord](https://discord.gg/jn4EGJjrvv).
+```sh
+vp run dev
+```
+
+デスクトップ版（Electron）:
+
+```sh
+vp run dev:desktop
+```
+
+Web 版は起動時にペアリング URL が表示されます。新しいブラウザでは素の URL だけでは認証されないため、表示されたペアリング URL を開いてください。
+
+### 5. 設定画面を日本語にする
+
+設定（Settings）→ 一般（General）→ 言語（Language）で「日本語」を選択します。
+
+### 6. エージェント CLI（別途必要）
+
+T3 Code 自体は AI モデルを持たず、既存のエージェント CLI を束ねるためのツールです。利用するエージェント（例: Claude Code）のインストールとログインが別途必要です。各エージェントの公式手順に従ってください。
+
+## アップデート方針
+
+- ベースは安定版タグに追随します（Nightly は追いません）。新しい安定版が出たら `local-ja` をそのタグへ rebase します。
+- rebase の際、`[official-ja-settings]` 層と `[local-ja]` 層で競合しうる箇所が分かれているため、層ごとに対処できます。
+- 取り込み先の安定版に公式の言語切り替えと日本語が含まれている場合（`apps/web/src/i18n/translations/ja.json` が存在し、`apps/web/gt.config.json` の `locales` に `"ja"` がある場合）は、`[official-ja-settings]` の3コミットを drop してこの層を外します。
+
+## 注意点
+
+- 本家は 0.1.x の開発途上のソフトウェアです。破壊的変更や不具合が含まれる場合があります。
+- T3 Code にはサンドボックス機能がなく、エージェントは連携した CLI の権限でそのまま動作します。実行させる範囲の管理は、利用する環境に合わせて行ってください。
+- このリポジトリは公開されています。認証情報や個人情報などの秘密情報をコミットしないでください。
+- 本家の CONTRIBUTING は、チーム外からの新機能 PR を受け付けない方針です。このフォークの変更を本家へ PR する前提にはしていません。
